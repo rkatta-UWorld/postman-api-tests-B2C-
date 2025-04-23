@@ -1,0 +1,99 @@
+{
+	"id": "48b0a8c5-6948-4d34-b8d6-95bb2d6a001f",
+	"name": "QA",
+	"values": [
+		{
+			"key": "IdentityServerUrl",
+			"value": "https://identity-service-qa.zeqo.com",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "APIGatewayUrl",
+			"value": "https://gateway-api-qa.zeqo.com",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "access_token",
+			"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg2MDA1MjNGRjhDNTIzMkVEOThFOTA1NEYwMTQ0RkIxQzI0M0NBOUZSUzI1NiIsInR5cCI6IkpXVCIsIng1dCI6ImhnQlNQX2pGSXk3WmpwQlU4QlJQc2NKRHlwOCJ9.eyJuYmYiOjE3NDA2NDY2NTYsImV4cCI6MTc0MDY1MDI1NiwiaXNzIjoiaHR0cHM6Ly9pZGVudGl0eS1zZXJ2aWNlLXFhLnplcW8uY29tIiwiYXVkIjpbIlN1Yl9TZXJ2aWNlIiwiaHR0cHM6Ly9pZGVudGl0eS1zZXJ2aWNlLXFhLnplcW8uY29tL3Jlc291cmNlcyJdLCJjbGllbnRfaWQiOiJ3ZWIiLCJzdWIiOiIyMzYxMTQ4IiwiYXV0aF90aW1lIjoxNzQwNjQ2NjU2LCJpZHAiOiJsb2NhbCIsImp0aSI6IjdDQ0ZCQzcyQTA2RjcwQTFCQzhGRjUwQzJFMkU2OUQ3IiwiaWF0IjoxNzQwNjQ2NjU2LCJzY29wZSI6WyJOb3RlYm9va0FQSSIsIlN1Yl9TZXJ2aWNlIiwiU3Vic2NyaXB0aW9uQVBJIiwib2ZmbGluZV9hY2Nlc3MiXSwiYW1yIjpbImN1c3RvbSJdfQ.dh5xpuSyh2bXWXPk2HvgT7IoFIsbEWeNwdHvvcvc-fSUYfAAOq3H543CDWwpBzbfjWRjH66EwZNYfvq5W7IkfNebWnfbKE_WGgyG-iA0Sp_8PSZZI-ljEI4JuT5hwX5ui-TLo4S7Llh6Qr7T-PJpxa2lWx4QdtY9n9yt_nXXsOW1clUti1X4N_KDGo3KCYDuaOGFIvBLGKk_vFcyoe4uLytMrjMD3cF_aKpU510iE_Nokft4gTmBRdvl1vS_es-CGpY3wds6JAxXdJjKR4iUHQ_WlMnEqDOv_LmBxprIeC9wvH5qjBQtQL-ItWdaR4VMkzQdvsQaDGcDgGmSlWVKMw",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "token_type",
+			"value": "Bearer",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "refresh_token",
+			"value": "495B1BC94B2936AA97C10FCCC0ECF1805EA454B6F5BD90CA4B6DC8C55F6228C7",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "id",
+			"value": "67bfec805e2dcbe8371ac54f",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "authKey",
+			"value": "tX1qm0zhNhGooRL/AdUMi/pMzJKYMz5OOs0Ubt8iY2XkYcvb3E1ZGxI9caTFptXmp3MHQqhF34ipstZxfcZYsMrPQGl9Brp/dWUNmIqwWbdtpeDTHa6OOtK23UwtAyHkV3OHEDMmDz+8oFsZsRUVnDFdepBChHReCnrABU1mhjBEK9FMATu0gZ/8uO1dlQX3DxwCHsIMfWjPVmL6V3g47f/epx8TeSERmiXxf5neb5A6TDA/SpNcjTkoaPGODGPDauE8igC9TsAFzT2aejuoQSXE1ozv+ChPdkwZv13LcauGy8rVQwiO9UmdLnNifh7iLp7ACcFvcAFmSWCBlKH4xZGKznGczao99l/gHK65nRF5sC3o6SFjPFnXs3MrT5E4RAg/7puuE+LcpJIJp+5tBJFEdDLG6gpZsq0swZE/afsEbiKbOAgA8UrvbWClUVz74XXAjZHKKg6N+Jh2DDw1jrdrLGnbAMmtAfIWvf6UAAhMdWZTF8moahP0ClHYgluaGc6znVXpNWTRbf6xFAE3o+Ee7Eb3qtoZp01uO+SaYZL4rdY3vnIVRu7swaBc0+yWN1xFoPHnpZ/zstcujTQpy2xXBD+pMpRF8UyGa8GWHIZdBWm0QakYFmYXtG6I/+fZpqyu17pIxH6GY157uNGv8xX6pIw44eWy7s55IsDe7R5tfsAYOvkRKsdjEGJ74K5uvnZ1sCOcRzggOgrVwsokuqG9P5feUNefu0SDYiCieNNXJVr3d8R6ETyKjagY0hslTjHTj8AvU8OF9AgD2JYitNQUyMQmh+47DgJyTU5POD+Bi89Zo9tHIII2PwxmfWxDbTi1NVJwbw7cDiThziWJpjqN+z1dleqKELe8Uwk2f2c81b3OU/uYBUdecCTnvjd7O3LPgebpFXiICe+XBDaDlnh8HihtrQ60STodkffkXGGVVwfui1OdapXEJzUCpm8J",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Title",
+			"value": "JQky8amPxb",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "NoteText",
+			"value": "nnaBABtoIutiMz0cDkX8DDVrNUp9IycBdfgDkwHTs3y9H5aNh4",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Tag",
+			"value": "fUs955lwsS",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "UpdatedTitle",
+			"value": "vmf4l1PKIeaDXPt3koUK",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "UpdatedNoteText",
+			"value": "rWj42izzLfes21kGicFyZMMxVojDo2z8wmuARnFoWfDl6R79MvTqGj1g2G4JD0JIjq0CbWk9ADbXsoQkDbF4EsZhPYtDrScCBoGf",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "UpdatedTag",
+			"value": "xitowEpc",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "NewTag",
+			"value": "IWBef1lFvQqW",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "testId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2025-04-08T05:18:25.604Z",
+	"_postman_exported_using": "Postman/11.40.1"
+}

@@ -1,0 +1,1180 @@
+{
+	"info": {
+		"_postman_id": "d410b2bb-f08f-479b-9a01-4ff1394e9390",
+		"name": "B2C WEB API - Master",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13746882",
+		"_collection_link": "https://b2c-qa.postman.co/workspace/B2C-Web-API-Automation~fdb009b1-6424-456b-9fa6-f3872f17007f/collection/13746882-d410b2bb-f08f-479b-9a01-4ff1394e9390?action=share&source=collection_link&creator=13746882"
+	},
+	"item": [
+		{
+			"name": "MyNoteBook",
+			"item": [
+				{
+					"name": "Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the JSON response\r",
+									"let response = pm.response.json(); \r",
+									"\r",
+									"// Store values in environment variables\r",
+									"pm.environment.set(\"access_token\", response.access_token);\r",
+									"pm.environment.set(\"token_type\", response.token_type);\r",
+									"pm.environment.set(\"refresh_token\", response.refresh_token);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains expected Key : Access Token\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"access_token\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "web",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "FNu7dXZk4JxZ",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "rkatta@uworld.in",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "5D2E426489D4DDB05B554FC464ED59E2",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "Sub_Service SubscriptionAPI offline_access NotebookAPI",
+									"type": "text"
+								},
+								{
+									"key": "ipaddress",
+									"value": "76.184.240.207",
+									"type": "text"
+								},
+								{
+									"key": "versioninfo",
+									"value": "{'deviceTypeId':3, 'osVersion':'Win', 'soapVersion': 184, 'appVersion': '1.1',  'otherInfo':'product:qbanks;jreversion:1.5;ver:6.4;'}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{IdentityServerUrl}}/connect/token",
+							"host": [
+								"{{IdentityServerUrl}}"
+							],
+							"path": [
+								"connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetValidSubscription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the JSON response\r",
+									"let response = pm.response.json(); \r",
+									"\r",
+									"// Store values in environment variables\r",
+									"pm.environment.set(\"authKey\", response.authKey);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains expected key : authKey\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"authKey\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_type}} {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "config-parameters",
+								"value": "{\"configId\":4,\"deviceTypeId\":1,\"topLevelProductId\":1}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"subscriptionId\": 14266913,\r\n  \"isRefreshLogin\": true,\r\n  \"ipAddress\": \"1.1.1.1\",\r\n  \"versionInfo\": \"{'deviceTypeId':1, 'osVersion':'Win', 'wsVersion': 210, 'appVersion': '1.1', 'geoLocation':'', 'otherInfo':'product:qbanks;jreversion:1.5;ver:6.4;'}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{APIGatewayUrl}}/api/subscription/GetValidSubscription",
+							"host": [
+								"{{APIGatewayUrl}}"
+							],
+							"path": [
+								"api",
+								"subscription",
+								"GetValidSubscription"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Note",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the JSON response\r",
+									"let response = pm.response.json(); \r",
+									"\r",
+									"// Store values in environment variables\r",
+									"pm.environment.set(\"id\", response.id);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Notebook is created successfully\", function () {\r",
+									"    let response = pm.response.json();\r",
+									"    pm.expect(response).to.have.property(\"id\");\r",
+									"    \r",
+									"    if (response.id) {\r",
+									"        console.log(\"✅ Notebook is created successfully\");\r",
+									"    } else {\r",
+									"        console.log(\"❌ Notebook creation failed.\");\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Function to generate a random string of a given length\r",
+									"function generateRandomString(length) {\r",
+									"    let characters = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\";\r",
+									"    let result = \"\";\r",
+									"    for (let i = 0; i < length; i++) {\r",
+									"        result += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+									"    }\r",
+									"    return result;\r",
+									"}\r",
+									"\r",
+									"// Assign random values\r",
+									"let randomTitle = generateRandomString(10);\r",
+									"let randomNoteText = generateRandomString(50);\r",
+									"let randomTag = generateRandomString(10);  \r",
+									"\r",
+									"// Save values to environment variables (optional)\r",
+									"pm.environment.set(\"Title\", randomTitle);\r",
+									"pm.environment.set(\"NoteText\", randomNoteText);\r",
+									"pm.environment.set(\"Tag\", randomTag);\r",
+									"\r",
+									"// Log values to console (for debugging)\r",
+									"console.log(\"Title: \" + randomTitle);\r",
+									"console.log(\"NoteText: \" + randomNoteText);\r",
+									"console.log(\"Tag: \" + randomTag);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "api-uwsub-key",
+								"value": "{{authKey}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token_type}} {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "config-parameters",
+								"value": "{\"configId\":4,\"deviceTypeId\":1,\"topLevelProductId\":1}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"contentLength\": 0,\r\n  \"IsDeleted\": false,\r\n  \"IsLastVisited\": true,\r\n  \"ParentId\": null,\r\n  \"subscriptionId\": 14266913,\r\n  \"qBankId\": 1,\r\n  \"tempId\": \"1739776620833\",\r\n  \"Title\": \"{{Title}}\",\r\n  \"order\": 1,\r\n  \"NoteText\": \"{{NoteText}}\",\r\n  \"Tags\": [\"{{Tag}}\"]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{APIGatewayUrl}}/api/notebook/add",
+							"host": [
+								"{{APIGatewayUrl}}"
+							],
+							"path": [
+								"api",
+								"notebook",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Note",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"let requestId = pm.request.url.toString().split('/').pop(); // Extract ID from URL\r",
+									"\r",
+									"//  Status Code Check\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//  Validate Response NoteId Matches Request URL ID & Show Success Message\r",
+									"pm.test(\"Notebook updated successfully\", function () {\r",
+									"    pm.expect(response.NoteId).to.eql(requestId);\r",
+									"    console.log(\"✅ Notebook updated successfully. NoteId: \" + response.NoteId);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Function to generate a random string of a given length\r",
+									"function generateRandomString(length) {\r",
+									"    let characters = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\";\r",
+									"    let result = \"\";\r",
+									"    for (let i = 0; i < length; i++) {\r",
+									"        result += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+									"    }\r",
+									"    return result;\r",
+									"}\r",
+									"\r",
+									"// Generate and set environment variables\r",
+									"pm.environment.set(\"UpdatedTitle\", generateRandomString(20));  // Title - 20 characters\r",
+									"pm.environment.set(\"UpdatedNoteText\", generateRandomString(100)); // NoteText - 100 characters\r",
+									"pm.environment.set(\"UpdatedTag\", generateRandomString(8));  // First Tag - 8 characters\r",
+									"pm.environment.set(\"NewTag\", generateRandomString(12));  // Second Tag - 12 characters\r",
+									"\r",
+									"// Log generated values (for debugging)\r",
+									"console.log(\"Updated Title: \" + pm.environment.get(\"UpdatedTitle\"));\r",
+									"console.log(\"Updated NoteText: \" + pm.environment.get(\"UpdatedNoteText\"));\r",
+									"console.log(\"Tag1: \" + pm.environment.get(\"UpdatedTag\"));\r",
+									"console.log(\"Tag2: \" + pm.environment.get(\"NewTag\"));\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "api-uwsub-key",
+								"value": "{{authKey}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token_type}} {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "config-parameters",
+								"value": "{\"configId\":4,\"deviceTypeId\":1,\"topLevelProductId\":1}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": \"{{id}}\",\r\n  \"Title\": \"{{UpdatedTitle}}\",\r\n  \"order\": 1,\r\n  \"NoteText\": \"{{UpdatedNoteText}}\",\r\n  \"Tags\": [\r\n    \"{{UpdatedTag}}\",\r\n    \"{{NewTag}}\"\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{APIGatewayUrl}}/api/notebook/update/{{id}}",
+							"host": [
+								"{{APIGatewayUrl}}"
+							],
+							"path": [
+								"api",
+								"notebook",
+								"update",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Note",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"let requestId = pm.environment.get(\"id\"); // Get the ID sent in the request\r",
+									"\r",
+									"//  Status Code Check\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Validate Deleted ID Matches Request ID\r",
+									"pm.test(\"Notebook deleted successfully\", function () {\r",
+									"    pm.expect(response.deletedIds).to.include(requestId);\r",
+									"    console.log(\"✅ Notebook deleted successfully. Deleted Id: \" + requestId);\r",
+									"});\r",
+									"\r",
+									"// Validate Correct Action Type\r",
+									"pm.test(\"Correct ActionType : 0 in response\", function () {\r",
+									"    pm.expect(response.actionType).to.eql(0);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "api-uwsub-key",
+								"value": "{{authKey}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token_type}} {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "config-parameters",
+								"value": "{\"configId\":4,\"deviceTypeId\":1,\"topLevelProductId\":1}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"DeleteIds\": [\r\n    \"{{id}}\"\r\n  ],\r\n  \"ActionType\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{APIGatewayUrl}}/api/notebook/delete/",
+							"host": [
+								"{{APIGatewayUrl}}"
+							],
+							"path": [
+								"api",
+								"notebook",
+								"delete",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Undo - Deleted Note",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"let requestId = pm.environment.get(\"id\"); // Get the ID sent in the request\r",
+									"\r",
+									"\r",
+									"\r",
+									"// Status Code Check\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Validate Restored ID Matches Request ID\r",
+									"pm.test(\"Notebook restored successfully\", function () {\r",
+									"    pm.expect(response.deletedIds).to.include(requestId);\r",
+									"    console.log(\"✅ Notebook restored successfully. Restored Id: \" + requestId);\r",
+									"});\r",
+									"\r",
+									"// Validate Correct Action Type\r",
+									"pm.test(\"Correct ActionType : 1 in response\", function () {\r",
+									"    pm.expect(response.actionType).to.eql(1);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "api-uwsub-key",
+								"value": "{{authKey}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token_type}} {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "config-parameters",
+								"value": "{\"configId\":4,\"deviceTypeId\":1,\"topLevelProductId\":1}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"DeleteIds\": [\r\n    \"{{id}}\"\r\n  ],\r\n  \"ActionType\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{APIGatewayUrl}}/api/notebook/delete/",
+							"host": [
+								"{{APIGatewayUrl}}"
+							],
+							"path": [
+								"api",
+								"notebook",
+								"delete",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Notes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the API response\r",
+									"let response = pm.response.json();\r",
+									"\r",
+									"// Retrieve the stored ID from the environment (set during note creation)\r",
+									"let createdId = pm.environment.get(\"id\"); \r",
+									"\r",
+									"//  Check if status is 200\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Extract all note IDs from response\r",
+									"/*let allNoteIds = [];\r",
+									"response.data.forEach(parentNote => {\r",
+									"    parentNote.notes.forEach(childNote => {\r",
+									"        allNoteIds.push(childNote.id);\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"// Validate that the created ID exists in the response\r",
+									"pm.test(\"Created MyNoteBook is present in the response\", function () {\r",
+									"    pm.expect(allNoteIds).to.include(createdId);\r",
+									"    console.log(\"✅ Created MyNoteBook found in response: \" + createdId);\r",
+									"});*/\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "api-uwsub-key",
+								"value": "{{authKey}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token_type}} {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "config-parameters",
+								"value": "{\"configId\":4,\"deviceTypeId\":1,\"topLevelProductId\":1}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"subscriptionId\": \"13746423\",\r\n    \"qBankId\": 1,\r\n    \"qBankName\": \"STEP1 QBank \",\r\n    \"expirationDate\": \"2025-12-12T03:59:00.000Z\",\r\n    \"notebookLinked\": true\r\n  }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{APIGatewayUrl}}/api/notebook/getNotes",
+							"host": [
+								"{{APIGatewayUrl}}"
+							],
+							"path": [
+								"api",
+								"notebook",
+								"getNotes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Custom Test",
+			"item": [
+				{
+					"name": "Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the JSON response\r",
+									"let response = pm.response.json(); \r",
+									"\r",
+									"// Store values in environment variables\r",
+									"pm.environment.set(\"access_token\", response.access_token);\r",
+									"pm.environment.set(\"token_type\", response.token_type);\r",
+									"pm.environment.set(\"refresh_token\", response.refresh_token);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains expected Key : Access Token\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"access_token\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "web",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "FNu7dXZk4JxZ",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "rkatta@uworld.in",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "5D2E426489D4DDB05B554FC464ED59E2",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "Sub_Service SubscriptionAPI offline_access NotebookAPI",
+									"type": "text"
+								},
+								{
+									"key": "ipaddress",
+									"value": "76.184.240.207",
+									"type": "text"
+								},
+								{
+									"key": "versioninfo",
+									"value": "{'deviceTypeId':3, 'osVersion':'Win', 'soapVersion': 184, 'appVersion': '1.1',  'otherInfo':'product:qbanks;jreversion:1.5;ver:6.4;'}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{IdentityServerUrl}}/connect/token",
+							"host": [
+								"{{IdentityServerUrl}}"
+							],
+							"path": [
+								"connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetValidSubscription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the JSON response\r",
+									"let response = pm.response.json(); \r",
+									"\r",
+									"// Store values in environment variables\r",
+									"pm.environment.set(\"authKey\", response.authKey);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains expected key : authKey\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"authKey\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_type}} {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "config-parameters",
+								"value": "{\"configId\":4,\"deviceTypeId\":1,\"topLevelProductId\":1}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"subscriptionId\": 14266913,\r\n  \"isRefreshLogin\": true,\r\n  \"ipAddress\": \"1.1.1.1\",\r\n  \"versionInfo\": \"{'deviceTypeId':1, 'osVersion':'Win', 'wsVersion': 210, 'appVersion': '1.1', 'geoLocation':'', 'otherInfo':'product:qbanks;jreversion:1.5;ver:6.4;'}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{APIGatewayUrl}}/api/subscription/GetValidSubscription",
+							"host": [
+								"{{APIGatewayUrl}}"
+							],
+							"path": [
+								"api",
+								"subscription",
+								"GetValidSubscription"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Custom Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the JSON response\r",
+									"let response = pm.response.json(); \r",
+									"\r",
+									"// Store values in environment variables\r",
+									"pm.environment.set(\"testId\", response.testId);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Api-Uwsub-Key",
+								"value": "{{authKey}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token_type}} {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "config-parameters",
+								"value": "{\"configId\":4,\"deviceTypeId\":1,\"topLevelProductId\":1}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"testMode\": 2,\r\n  \"testSource\": 1,\r\n  \"questionMode\": 4,\r\n  \"superDivisioIds\": [],\r\n  \"divisionIds\": [],\r\n  \"topics\": [],\r\n  \"questionIds\": \"1943,11763,1883,19173,1884\",\r\n  \"maxQuestionCount\": 20,\r\n  \"autoSelectMaxQuestion\": false,\r\n  \"isQuickTest\": null,\r\n  \"isAllSubjectsSelected\": false,\r\n  \"isAllSystemsSelected\": false,\r\n  \"allowCalculator\": null,\r\n  \"testTypeId\": null,\r\n  \"sectionId\": null,\r\n  \"difficultyLevelId\": null,\r\n  \"formatTypeIds\": null,\r\n  \"questionModes\": \"4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gateway-api-qa.zeqo.com/api/qbank/GenerateNewTest/",
+							"protocol": "https",
+							"host": [
+								"gateway-api-qa",
+								"zeqo",
+								"com"
+							],
+							"path": [
+								"api",
+								"qbank",
+								"GenerateNewTest",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "End Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Api-Uwsub-Key",
+								"value": "{{authKey}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token_type}} {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "config-parameters",
+								"value": "{\"configId\":4,\"deviceTypeId\":1,\"topLevelProductId\":1}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"updateStudyTaskRequest\": null,\r\n  \"testSource\": null,\r\n  \"testId\": {{testId}},\r\n  \"userId\": 2361148,\r\n  \"correctToIncorrect\": 3,\r\n  \"incorrectToCorrect\": 5,\r\n  \"incorrectToIncorrect\": 1,\r\n  \"timeInSeconds\": 257,\r\n  \"qbankId\": 1,\r\n  \"testModeId\": 2,\r\n  \"questionModeId\": 4,\r\n  \"lastQuestionVisited\": 20,\r\n  \"isEnded\": true,\r\n  \"testDetails\": [\r\n    {\r\n      \"updateStudyTaskRequest\": null,\r\n      \"isGenerateNextQuestion\": null,\r\n      \"formatTypeId\": null,\r\n      \"questionId\": 1943,\r\n      \"questionIndex\": 1943,\r\n      \"userAnswer\": \"2\",\r\n      \"highlights\": null,\r\n      \"isCorrect\": true,   \r\n      \"isIncorrect\": false, \r\n      \"isOmitted\": false,\r\n      \"isMarked\": false,\r\n      \"isSubmitted\": false,\r\n      \"timeSpent\": 62,\r\n      \"sequenceId\": 1,\r\n      \"confSurveyValue\": 0,\r\n      \"notes\": null,\r\n      \"parentQuestionId\": 0,\r\n      \"questionSetSequenceId\": 0,\r\n      \"questionToAnswerBeforeThis\": 0,\r\n      \"subParentQuestionId\": 0,\r\n      \"isHintUsed\": null,\r\n      \"isUpdateDateAttempted\": false,\r\n      \"dailyTimeSpent\": 62,\r\n      \"dailyTimeSpentReview\": 0,\r\n      \"totalTimeSpentReview\": 0,\r\n      \"weightScored\": null,\r\n      \"annotations\": null\r\n    },\r\n    {\r\n      \"updateStudyTaskRequest\": null,\r\n      \"isGenerateNextQuestion\": null,\r\n      \"formatTypeId\": null,\r\n      \"questionId\": 10651,\r\n      \"questionIndex\": 11763,\r\n      \"userAnswer\": \"2\",\r\n      \"highlights\": null,\r\n      \"isCorrect\": false,  \r\n      \"isIncorrect\": true, \r\n      \"isOmitted\": false,\r\n      \"isMarked\": false,\r\n      \"isSubmitted\": false,\r\n      \"timeSpent\": 20,\r\n      \"sequenceId\": 2,\r\n      \"confSurveyValue\": 0,\r\n      \"notes\": null,\r\n      \"parentQuestionId\": 0,\r\n      \"questionSetSequenceId\": 0,\r\n      \"questionToAnswerBeforeThis\": 0,\r\n      \"subParentQuestionId\": 0,\r\n      \"isHintUsed\": null,\r\n      \"isUpdateDateAttempted\": false,\r\n      \"dailyTimeSpent\": 20,\r\n      \"dailyTimeSpentReview\": 0,\r\n      \"totalTimeSpentReview\": 0,\r\n      \"weightScored\": null,\r\n      \"annotations\": null\r\n    },\r\n    {\r\n      \"updateStudyTaskRequest\": null,\r\n      \"isGenerateNextQuestion\": null,\r\n      \"formatTypeId\": null,\r\n      \"questionId\": 1883,\r\n      \"questionIndex\": 1883,\r\n      \"userAnswer\": \"4\",\r\n      \"highlights\": null,\r\n      \"isCorrect\": false,  \r\n      \"isIncorrect\": true, \r\n      \"isOmitted\": false,\r\n      \"isMarked\": false,\r\n      \"isSubmitted\": false,\r\n      \"timeSpent\": 13,\r\n      \"sequenceId\": 3,\r\n      \"confSurveyValue\": 0,\r\n      \"notes\": null,\r\n      \"parentQuestionId\": 0,\r\n      \"questionSetSequenceId\": 0,\r\n      \"questionToAnswerBeforeThis\": 0,\r\n      \"subParentQuestionId\": 0,\r\n      \"isHintUsed\": null,\r\n      \"isUpdateDateAttempted\": false,\r\n      \"dailyTimeSpent\": 13,\r\n      \"dailyTimeSpentReview\": 0,\r\n      \"totalTimeSpentReview\": 0,\r\n      \"weightScored\": null,\r\n      \"annotations\": null\r\n    },\r\n    {\r\n      \"updateStudyTaskRequest\": null,\r\n      \"isGenerateNextQuestion\": null,\r\n      \"formatTypeId\": null,\r\n      \"questionId\": 17713,\r\n      \"questionIndex\": 19173,\r\n      \"userAnswer\": \"5\",\r\n      \"highlights\": null,\r\n      \"isCorrect\": true,   \r\n      \"isIncorrect\": false, \r\n      \"isOmitted\": false,\r\n      \"isMarked\": false,\r\n      \"isSubmitted\": false,\r\n      \"timeSpent\": 7,\r\n      \"sequenceId\": 4,\r\n      \"confSurveyValue\": 0,\r\n      \"notes\": null,\r\n      \"parentQuestionId\": 0,\r\n      \"questionSetSequenceId\": 0,\r\n      \"questionToAnswerBeforeThis\": 0,\r\n      \"subParentQuestionId\": 0,\r\n      \"isHintUsed\": null,\r\n      \"isUpdateDateAttempted\": false,\r\n      \"dailyTimeSpent\": 7,\r\n      \"dailyTimeSpentReview\": 0,\r\n      \"totalTimeSpentReview\": 0,\r\n      \"weightScored\": null,\r\n      \"annotations\": null\r\n    },\r\n    {\r\n      \"updateStudyTaskRequest\": null,\r\n      \"isGenerateNextQuestion\": null,\r\n      \"formatTypeId\": null,\r\n      \"questionId\": 1884,\r\n      \"questionIndex\": 1884,\r\n      \"userAnswer\": \"4\",\r\n      \"highlights\": null,\r\n      \"isCorrect\": false,  \r\n      \"isIncorrect\": true, \r\n      \"isOmitted\": false,\r\n      \"isMarked\": false,\r\n      \"isSubmitted\": false,\r\n      \"timeSpent\": 7,\r\n      \"sequenceId\": 5,\r\n      \"confSurveyValue\": 0,\r\n      \"notes\": null,\r\n      \"parentQuestionId\": 0,\r\n      \"questionSetSequenceId\": 0,\r\n      \"questionToAnswerBeforeThis\": 0,\r\n      \"subParentQuestionId\": 0,\r\n      \"isHintUsed\": null,\r\n      \"isUpdateDateAttempted\": false,\r\n      \"dailyTimeSpent\": 7,\r\n      \"dailyTimeSpentReview\": 0,\r\n      \"totalTimeSpentReview\": 0,\r\n      \"weightScored\": null,\r\n      \"annotations\": null\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gateway-api-qa.zeqo.com/api/qbank/saveTest/",
+							"protocol": "https",
+							"host": [
+								"gateway-api-qa",
+								"zeqo",
+								"com"
+							],
+							"path": [
+								"api",
+								"qbank",
+								"saveTest",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Results",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Validate Your Score and AverageScore\", function () {\r",
+									"    pm.expect(pm.response.json().score).to.eql(40);\r",
+									"    pm.expect(pm.response.json().averageScore).to.eql(57);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate Test Mode and Test Source\", function () {\r",
+									"    pm.expect(pm.response.json().questionModes).to.eql(\"4\");  // Test Mode = 4 (Custom Test)\r",
+									"    pm.expect(pm.response.json().testSource).to.eql(1);  // Test Source = 1 (Created from Create Test page)\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Api-Uwsub-Key",
+								"value": "{{authKey}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token_type}} {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "config-parameters",
+								"value": "{\"configId\":4,\"deviceTypeId\":1,\"topLevelProductId\":1}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gateway-api-qa.zeqo.com/api/qbank/GetTestRecordDetails/{{testId}}",
+							"protocol": "https",
+							"host": [
+								"gateway-api-qa",
+								"zeqo",
+								"com"
+							],
+							"path": [
+								"api",
+								"qbank",
+								"GetTestRecordDetails",
+								"{{testId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Analysis",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response values\", function () {\r",
+									"    let response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response.correctCount).to.equal(2);\r",
+									"    pm.expect(response.incorrectCount).to.equal(3);\r",
+									"    pm.expect(response.omittedCount).to.equal(0);\r",
+									"    pm.expect(response.correctToIncorrect).to.equal(3);\r",
+									"    pm.expect(response.incorrectToCorrect).to.equal(5);\r",
+									"    pm.expect(response.inicorrectToIncorrect).to.equal(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate correctPercent, incorrectPercent, omittedPercent in subjects \", function () {\r",
+									"    let response = pm.response.json();\r",
+									"\r",
+									"    // Ensure subjects array exists and is not empty\r",
+									"    pm.expect(response.subjects).to.be.an('array').that.is.not.empty;\r",
+									"\r",
+									"    response.subjects.forEach(subject => {\r",
+									"        pm.expect(subject.correctPercent).to.equal(40);\r",
+									"        pm.expect(subject.incorrectPercent).to.equal(60);\r",
+									"        pm.expect(subject.omittedPercent).to.equal(0);\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate correctPercent, incorrectPercent, omittedPercent in systems \", function () {\r",
+									"    let response = pm.response.json();\r",
+									"\r",
+									"    // Ensure systems array exists and is not empty\r",
+									"    pm.expect(response.systems).to.be.an('array').that.is.not.empty;\r",
+									"\r",
+									"    response.systems.forEach(system => {\r",
+									"        pm.expect(system.correctPercent).to.equal(40);\r",
+									"        pm.expect(system.incorrectPercent).to.equal(60);\r",
+									"        pm.expect(system.omittedPercent).to.equal(0);\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Api-Uwsub-Key",
+								"value": "{{authKey}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token_type}} {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "config-parameters",
+								"value": "{\"configId\":4,\"deviceTypeId\":1,\"topLevelProductId\":1}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gateway-api-qa.zeqo.com/api/qbank/GetPerformance/{{testId}}",
+							"protocol": "https",
+							"host": [
+								"gateway-api-qa",
+								"zeqo",
+								"com"
+							],
+							"path": [
+								"api",
+								"qbank",
+								"GetPerformance",
+								"{{testId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
